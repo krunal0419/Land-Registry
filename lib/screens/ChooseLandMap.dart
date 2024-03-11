@@ -106,14 +106,39 @@ class _landOnMapState extends State<landOnMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF272D34),
-        title: const Text('Draw Land on Map'),
+        toolbarHeight: 100,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Color.fromARGB(255, 255, 255, 255),
+            size: 60, // Adjust the size as per your requirement
+          ),
+          onPressed: () {
+            // Handle going back here
+            Navigator.of(context)
+                .pop(); // Or any other navigation logic to go back
+          },
+        ),
+        title: const Text(
+          'Draw Land on Map',
+          style: TextStyle(
+            fontSize: 45,
+            color: Colors.white, // Set text color to white
+          ),
+        ),
         actions: [
           Center(
             child: Container(
-              padding: const EdgeInsets.all(5),
-              width: 600,
-              decoration: BoxDecoration(color: Colors.white10),
+              width: 750,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(26, 255, 254, 254),
+                border: Border.all(
+                  color: Colors.white,
+                  width:
+                      4, // Adjust the width of the border as per your requirement
+                ),
+              ),
               child: CompositedTransformTarget(
                 link: this._layerLink,
                 child: TextField(
@@ -133,12 +158,14 @@ class _landOnMapState extends State<landOnMap> {
                     }
                   },
                   focusNode: this._focusNode,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white,fontSize: 35),
                   decoration: InputDecoration(
                       prefix: const Icon(
                         Icons.search,
                         color: Colors.white,
+                        size:45,
                       ),
+                      
                       isDense: true, // Added this
                       contentPadding: const EdgeInsets.all(12),
                       border: OutlineInputBorder(
@@ -146,7 +173,8 @@ class _landOnMapState extends State<landOnMap> {
                       fillColor: Colors.white,
                       focusColor: Colors.white,
                       hintText: 'Search',
-                      hintStyle: const TextStyle(color: Colors.white)),
+                      hintStyle:
+                          const TextStyle(color: Colors.white, fontSize: 40)),
                 ),
               ),
             ),
@@ -154,90 +182,116 @@ class _landOnMapState extends State<landOnMap> {
         ],
       ),
       body: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                height: 550,
-                width: 900,
-                child: MapboxMap(
-                    accessToken: mapBoxApiKey,
-                    styleString: isSatelliteView
-                        ? "mapbox://styles/saurabhmw/cky4ce7f61b2414nuh9ng177k"
-                        : "mapbox://styles/saurabhmw/ckyb6byh90rvy15pcc8bej1r7",
-                    initialCameraPosition: CameraPosition(
-                      zoom: 3.0,
-                      target: const LatLng(19.663280, 75.300293),
-                    ),
-                    onMapCreated: (MapboxMapController controller) {
-                      mapController = controller;
-                    },
-                    compassEnabled: false,
-                    onMapClick:
-                        (Point<double> point, LatLng coordinates) async {
-                      if (_polygonAdded) {
-                        polygon.add(coordinates);
-                        allLatitude += coordinates.latitude.toString() + ",";
-                        allLongitude += coordinates.longitude.toString() + ",";
+        child: Column(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(top: 0),
+                child: Container(
+                  height: 1330,
+                  width: double.infinity,
+                  child: MapboxMap(
+                      accessToken: mapBoxApiKey,
+                      styleString: isSatelliteView
+                          ? "mapbox://styles/saurabhmw/cky4ce7f61b2414nuh9ng177k"
+                          : "mapbox://styles/saurabhmw/ckyb6byh90rvy15pcc8bej1r7",
+                      initialCameraPosition: CameraPosition(
+                        zoom: 5.0,
+                        target: const LatLng(19.663280, 75.300293),
+                      ),
+                      onMapCreated: (MapboxMapController controller) {
+                        mapController = controller;
+                      },
+                      compassEnabled: false,
+                      onMapClick:
+                          (Point<double> point, LatLng coordinates) async {
+                        if (_polygonAdded) {
+                          polygon.add(coordinates);
+                          allLatitude += coordinates.latitude.toString() + ",";
+                          allLongitude +=
+                              coordinates.longitude.toString() + ",";
 
-                        mapController.addCircle(CircleOptions(
-                            geometry: coordinates,
-                            circleRadius: 5,
-                            circleColor: "#ff0000",
-                            draggable: true));
+                          mapController.addCircle(CircleOptions(
+                              geometry: coordinates,
+                              circleRadius: 5,
+                              circleColor: "#ff0000",
+                              draggable: true));
 
-                        if (polygon.length == 3) {
-                          landPolygonFill = await mapController.addFill(
-                            FillOptions(
-                              fillColor: "#2596be",
-                              fillOutlineColor: "#2596be",
-                              geometry: [polygon],
-                            ),
-                          );
-                        }
-                        if (polygon.length > 3) {
-                          mapController.updateFill(
-                              landPolygonFill,
+                          if (polygon.length == 3) {
+                            landPolygonFill = await mapController.addFill(
                               FillOptions(
                                 fillColor: "#2596be",
                                 fillOutlineColor: "#2596be",
                                 geometry: [polygon],
-                              ));
+                              ),
+                            );
+                          }
+                          if (polygon.length > 3) {
+                            mapController.updateFill(
+                                landPolygonFill,
+                                FillOptions(
+                                  fillColor: "#2596be",
+                                  fillOutlineColor: "#2596be",
+                                  geometry: [polygon],
+                                ));
 
-                          //print(landPolygonFill.options.geometry.toString());
+                            //print(landPolygonFill.options.geometry.toString());
+                          }
                         }
-                      }
-                    }),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
+                      }),
+                )),
+            const SizedBox(
+              height: 5,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    icon: const Icon(Icons.add),
-                    label:
-                        _polygonAdded ? Text('Drawing') : Text('Start Drawing'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal:
+                              40), // Adjust padding as per your requirement
+                      // Set background color to black
+                    ),
+                    icon: const Icon(Icons.add,
+                        color: Color.fromARGB(255, 255, 255, 255), size: 45),
+                    label: _polygonAdded
+                        ? Text('Drawing',
+                            style: TextStyle(fontSize: 30, color: Colors.white))
+                        : Text('Start Drawing',
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.white)),
                     onPressed: () {
                       _polygonAdded = true;
-                      showToast("Add one by one marker on map",
-                          context: context,
-                          backgroundColor: Colors.green,
-                          duration: const Duration(seconds: 3));
+                      showToast(
+                        "Add one by one marker on map",
+                        context: context,
+                        backgroundColor: Colors.green,
+                        duration: const Duration(seconds: 3),
+                        textStyle: TextStyle(fontSize: 30),
+                      );
                       setState(() {});
                     },
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 40,
                   ),
                   ElevatedButton.icon(
-                    icon: const Icon(Icons.clear),
-                    label: Text('CLEAR All'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal:
+                              40), // Adjust padding as per your requirement
+                      // Set background color to black
+                    ),
+                    icon: const Icon(Icons.clear,
+                        color: Color.fromARGB(255, 255, 255, 255), size: 45),
+                    label: Text('CLEAR All',
+                        style: TextStyle(fontSize: 30, color: Colors.white)),
                     onPressed: () {
                       mapController.clearCircles();
                       mapController.clearFills();
@@ -248,11 +302,21 @@ class _landOnMapState extends State<landOnMap> {
                     },
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 40,
                   ),
                   ElevatedButton.icon(
-                    icon: Icon(Icons.save),
-                    label: Text('Save'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal:
+                              70), // Adjust padding as per your requirement
+                      // Set background color to black
+                    ),
+                    icon: Icon(Icons.save,
+                        color: Color.fromARGB(255, 255, 255, 255), size: 45),
+                    label: Text('Save',
+                        style: TextStyle(fontSize: 30, color: Colors.white)),
                     onPressed: () {
                       allLatitude = allLatitude.trim();
                       allLatitude =
@@ -265,22 +329,34 @@ class _landOnMapState extends State<landOnMap> {
                     },
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 40,
                   ),
                   ElevatedButton.icon(
-                    icon: const Icon(Icons.change_circle),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      padding: EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal:
+                              40), // Adjust padding as per your requirement
+                      // Set background color to black
+                    ),
+                    icon: const Icon(Icons.change_circle,
+                        color: Color.fromARGB(255, 255, 255, 255), size: 45),
                     label: !isSatelliteView
-                        ? Text('Satellite View')
-                        : Text('Road Map View'),
+                        ? Text('Satellite View',
+                            style: TextStyle(fontSize: 30, color: Colors.white))
+                        : Text('Road Map View',
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.white)),
                     onPressed: () {
                       isSatelliteView = !isSatelliteView;
                       setState(() {});
                     },
                   )
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
