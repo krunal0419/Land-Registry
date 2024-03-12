@@ -774,7 +774,8 @@ class _UserDashBoardState extends State<UserDashBoard> {
                   showToast("You are not verified",
                       context: context, backgroundColor: Colors.red);
                 }
-              }, () {
+              }, () 
+              {
                 List<String> allLatiLongi =
                     LandGall[index][4].toString().split('|');
 
@@ -795,8 +796,12 @@ class _UserDashBoardState extends State<UserDashBoard> {
                               allLatitude: allLatiLongi[0],
                               allLongitude: allLatiLongi[1],
                               landinfo: landinfo,
-                            )));
-              });
+                            )
+                          )
+                        );
+              }
+              
+              );
             },
           ),
         ),
@@ -849,8 +854,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         Navigator.pop(context);
                         await getLandInfo();
                         SmartDialog.dismiss();
-                      }));
-                      
+                      }));        
             },
           ),
         ),

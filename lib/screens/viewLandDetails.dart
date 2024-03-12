@@ -29,8 +29,27 @@ class _viewLandDetailsState extends State<viewLandDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF272D34),
-        title: const Text('Land Details'),
+        toolbarHeight: 100,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Color.fromARGB(255, 255, 255, 255),
+            size: 60, // Adjust the size as per your requirement
+          ),
+          onPressed: () {
+            // Handle going back here
+            Navigator.of(context)
+                .pop(); // Or any other navigation logic to go back
+          },
+        ),
+        title: const Text(
+          'Land Details',
+          style: TextStyle(
+            fontSize: 45,
+            color: Colors.white, // Set text color to white
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -42,14 +61,14 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                 height: 10,
               ),
               Container(
-                height: 500,
-                width: 700,
+                height: 900,
+                width: 1300,
                 child: MapboxMap(
                     accessToken: mapBoxApiKey,
                     styleString:
                         "mapbox://styles/saurabhmw/cky4ce7f61b2414nuh9ng177k",
                     initialCameraPosition: CameraPosition(
-                      zoom: 3.0,
+                      zoom: 4.5,
                       target: const LatLng(19.663280, 75.300293),
                     ),
                     compassEnabled: false,
@@ -68,7 +87,7 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       await Future.delayed(const Duration(seconds: 3));
                       mapController.animateCamera(
                           CameraUpdate.newCameraPosition(CameraPosition(
-                        zoom: 15.0,
+                        zoom: 18.0,
                         target: LatLng(lati[1], longi[0]),
                       )));
                       for (int i = 0; i < lati.length; i++) {
@@ -106,14 +125,20 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       style:
                           TextStyle(fontSize: 35, color: Colors.blueAccent))),
               const SizedBox(
-                height: 10,
+                height: 1,
               ),
-              const SizedBox(width: 700, child: Divider()),
               const SizedBox(
-                height: 10,
+                  width: 1200,
+                  child: Divider(
+                    height: 35,
+                    thickness: 2,
+                    color: Colors.black,
+                  )),
+              const SizedBox(
+                height: 5,
               ),
               Container(
-                width: 700,
+                width: 1200,
                 child: Table(
                   columnWidths: const {
                     0: FractionColumnWidth(0.3),
@@ -124,10 +149,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Area : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.area,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -141,10 +166,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Owner Address : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.ownerAddress,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -158,10 +183,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Address : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.landAddress,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -175,10 +200,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Price : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.landPrice,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -192,10 +217,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Survey Number : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.physicalSurveyNumber,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -209,10 +234,10 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Property Id : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
                       Text(widget.landinfo.propertyPID,
-                          style: const TextStyle(fontSize: 20))
+                          style: const TextStyle(fontSize: 30))
                     ]),
                     const TableRow(children: [
                       SizedBox(
@@ -226,15 +251,18 @@ class _viewLandDetailsState extends State<viewLandDetails> {
                       const Text(
                         "Document : ",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 35),
                       ),
-                      MaterialButton(
+                      Padding(
+                      padding: const EdgeInsets.only(right: 730.0),
+                      child: MaterialButton(
                         onPressed: () {
                           launchUrl(widget.landinfo.document);
                         },
                         child: const Text('View',
-                            style: TextStyle(fontSize: 20, color: Colors.blue)),
+                            style: TextStyle(fontSize: 30, color: Colors.blue)),
                       )
+                      ),
                     ]),
                     const TableRow(children: [
                       SizedBox(
