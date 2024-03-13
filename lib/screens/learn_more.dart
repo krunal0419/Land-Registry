@@ -29,7 +29,7 @@ class LearnMorePage extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Text(
-        'Welcome to the Learn More Page!',
+        'Welcome to Land Registry using Blockchain',
         style: TextStyle(
           fontSize: 55,
           fontWeight: FontWeight.w900,
