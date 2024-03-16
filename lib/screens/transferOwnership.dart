@@ -324,9 +324,22 @@ class _transferOwnershipState extends State<transferOwnership> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Transfer Ownership"),
+        title: const Text("Transfer Ownership",style: TextStyle(color: Colors.white,fontSize: 45)),
         centerTitle: true,
-        backgroundColor: const Color(0xFF272D34),
+        toolbarHeight: 100,
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Color.fromARGB(255, 255, 255, 255),
+            size: 50, // Adjust the size as per your requirement
+          ),
+          onPressed: () {
+            // Handle going back here
+            Navigator.of(context)
+                .pop(); // Or any other navigation logic to go back
+          },
+        ),
       ),
       body: isLoading
           ? const Center(

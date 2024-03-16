@@ -30,8 +30,9 @@ class _LandInspectorState extends State<LandInspector> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int screen = 0;
   bool isFirstTimeLoad = true;
-  dynamic userCount = -1, landCount = -1, transferedCount = 0;
+  dynamic userCount = -1, landCount = -1, transferedCount = 0, payment=0;
   bool isLoading = false;
+ 
   // int transferedCount = 0; 
 
   List<Menu> menuItems = [
@@ -572,6 +573,7 @@ Widget userList() {
       setState(() {
         isLoading = true;
         paymenList = [];
+        payment = paymenList.length;
       });
       List<dynamic> list;
       if (connectedWithMetamask) {
@@ -833,11 +835,11 @@ Widget userList() {
                 if (index == 2)
                   Row(
                     children: [
-                      landCount == -1
+                      payment == -1
                           ? const CircularProgressIndicator()
                           : Flexible(
                             child: Text(
-                                transferedCount.toString(),
+                                payment.toString(),
                                 style: const TextStyle(fontSize: 36,color: Colors.white),
                               ),
                           ),
