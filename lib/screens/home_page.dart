@@ -111,8 +111,9 @@ class _home_pageState extends State<home_page> {
                         child: Text(
                           'Login as',
                           style: TextStyle(
+                            fontWeight: FontWeight.w600,
                             color: const Color.fromARGB(232, 0, 0, 0),
-                            fontSize: isDesktop ? 35 : 25,
+                            fontSize: isDesktop ? 45 : 35,
                           ),
                         ),
                       ),
