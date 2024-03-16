@@ -729,7 +729,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
           child: Center(
               child: Text(
         'No Lands Added yet',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: 45, fontWeight: FontWeight.w500),
       )));
     }
     return Expanded(

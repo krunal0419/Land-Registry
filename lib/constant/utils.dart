@@ -279,7 +279,7 @@ Widget CustomTextFiled2(text, label) => Padding(
       child: TextFormField(
         initialValue: text,
         style: const TextStyle(
-          fontSize: 15,
+          fontSize: 20,
         ),
         decoration: InputDecoration(
           isDense: true,
