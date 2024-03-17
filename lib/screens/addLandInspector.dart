@@ -190,7 +190,7 @@ class _AddLandInspectorState extends State<AddLandInspector> {
                     Expanded(
                       child: Center(
                         child: Text(
-                          'LandInspector\'s Address',
+                        'LandInspector\'s Address',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,

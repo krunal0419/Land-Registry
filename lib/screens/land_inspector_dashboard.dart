@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:land_registration/providers/LandRegisterModel.dart';
 import 'package:land_registration/screens/transferOwnership.dart';
+import 'package:land_registration/screens/addLandInspector.dart';
 import 'package:land_registration/widget/menu_item_tile.dart';
 import 'package:provider/provider.dart';
 import '../constant/utils.dart';
@@ -26,7 +27,8 @@ class _LandInspectorState extends State<LandInspector> {
   List<List<dynamic>> userData = [];
   List<List<dynamic>> landData = [];
   List<List<dynamic>> paymenList = [];
-  
+  List<List<dynamic>> allLandInspectorInfo = [];
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int screen = 0;
   bool isFirstTimeLoad = true;
