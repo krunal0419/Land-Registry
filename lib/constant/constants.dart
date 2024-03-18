@@ -17,6 +17,4 @@ double rate = 0.029;
 const int chainId = 1337;
 //Ropsten-3, Polygon testnet-80001, local ganache-1337
 
-
-
 // to check transaction and deployment details: https://mumbai.polygonscan.com/

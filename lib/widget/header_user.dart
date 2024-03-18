@@ -26,7 +26,8 @@ class HeaderUserWidget extends StatelessWidget {
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.blue, Colors.white]),
+              colors: [Colors.blue, Colors.white]
+              ),
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),

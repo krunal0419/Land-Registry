@@ -131,7 +131,7 @@ class _AddLandInspectorState extends State<AddLandInspector> {
     );
   }
 
-  getLandInspectorInfo() async {
+getLandInspectorInfo() async {
     setState(() {
       isLoading = true;
     });
@@ -678,7 +678,7 @@ class _AddLandInspectorState extends State<AddLandInspector> {
                           },
                   ),
                 ),
-                isLoading
+                isLoading 
                     ? const CircularProgressIndicator()
                     : Container(),
               ],

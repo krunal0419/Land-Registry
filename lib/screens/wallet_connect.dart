@@ -230,9 +230,6 @@ class _CheckPrivateKeyState extends State<CheckPrivateKey> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     AddLandInspector()));
-                                        // Navigator.of(context).pushNamed(
-                                        //   '/contractowner',
-                                        // );
                                       }
                                     } else if (widget.val == "RegisterUser") {
                                       bool temp =
