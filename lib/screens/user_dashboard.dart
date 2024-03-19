@@ -910,7 +910,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 25,
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -925,6 +925,7 @@ class _UserDashBoardState extends State<UserDashBoard> {
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                           ],
+                                                  
                           decoration: const InputDecoration(
                             isDense: true, // Added this
                             contentPadding: EdgeInsets.all(12),

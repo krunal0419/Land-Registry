@@ -478,7 +478,7 @@ getLandInspectorInfo() async {
                                 address = val;
                               },
                               style: TextStyle(fontSize: 35),
-                              decoration: const InputDecoration(
+                                decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Address',
                                 hintText:'Enter Land Inspector Address(0xc5aEabE793B923981fc401bb8da620FDAa45ea2B)',
