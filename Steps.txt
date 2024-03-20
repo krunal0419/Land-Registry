@@ -5,3 +5,5 @@
 
 Contract Address:
 0xD113300B81F20AD7Eb1c96108c3cd6B6C8cf3A4C
+11 length alpha numeric Land ID (UPLIN)
+3 digit survey number
