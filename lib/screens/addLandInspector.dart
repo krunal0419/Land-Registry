@@ -31,7 +31,11 @@ class _AddLandInspectorState extends State<AddLandInspector> {
   dynamic userCount = -1, landCount = -1;
 
   List<Menu> menuItems = [
-    Menu(title: 'Add Land Inspector', icon: Icons.person_add,titleSize:70,iconSize: 70),
+    Menu(
+        title: 'Add Land Inspector',
+        icon: Icons.person_add,
+        titleSize: 70,
+        iconSize: 70),
     Menu(title: 'All Land Inspectors', icon: Icons.group),
     Menu(title: 'Change Contract Owner', icon: Icons.change_circle),
     Menu(title: 'Logout', icon: Icons.logout),
@@ -131,7 +135,7 @@ class _AddLandInspectorState extends State<AddLandInspector> {
     );
   }
 
-getLandInspectorInfo() async {
+  getLandInspectorInfo() async {
     setState(() {
       isLoading = true;
     });
@@ -158,54 +162,129 @@ getLandInspectorInfo() async {
   }
 
   Widget landInspectorList() {
-  if (isLoading) return const Center(child: CircularProgressIndicator());
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 20.0), // Add bottom padding here
-    child: ListView.builder(
-      itemCount:
-          allLandInspectorInfo == null ? 1 : allLandInspectorInfo.length + 1,
-      itemBuilder: (BuildContext context, int index) {
-        if (index == 0) {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    return Padding(
+      padding: const EdgeInsets.only(top: 0), // Add bottom padding here
+      child: ListView.builder(
+        itemCount:
+            allLandInspectorInfo == null ? 1 : allLandInspectorInfo.length + 1,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            return Column(
+              children: [
+                const Divider(
+                  height: 15,
+                  thickness: 2,
+                  color: Colors.black,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 15.0), // Adjust the left padding as needed
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Text(
+                          '#',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'LandInspector\'s Address',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        flex: 5,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Name',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        flex: 3,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'City',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        flex: 2,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Remove',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        flex: 2,
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  height: 15,
+                  thickness: 2,
+                  color: Colors.black,
+                )
+              ],
+            );
+          }
+          index -= 1;
+          List<dynamic> data = allLandInspectorInfo[index];
           return Column(
             children: [
-              const Divider(
-                height: 15,
-                thickness: 2,
-                color: Colors.black,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0), // Adjust the left padding as needed
-                child: Row(
-                  children: const [
+              ListTile(
+                title: Row(
+                  children: [
                     Expanded(
                       child: Text(
-                        '#',
+                        (index + 1).toString(),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
+                            fontSize: 30, fontWeight: FontWeight.w800),
                       ),
                       flex: 1,
                     ),
                     Expanded(
                       child: Center(
                         child: Text(
-                        'LandInspector\'s Address',
+                          data[1].toString(),
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                          ),
+                              fontSize: 30, fontWeight: FontWeight.w800),
                         ),
                       ),
                       flex: 5,
                     ),
                     Expanded(
                       child: Center(
-                        child: Text(
-                          'Name',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20), // Add left padding
+                          child: Text(
+                            data[2].toString(),
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),
@@ -213,11 +292,13 @@ getLandInspectorInfo() async {
                     ),
                     Expanded(
                       child: Center(
-                        child: Text(
-                          'City',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 45), // Add left padding
+                          child: Text(
+                            data[5].toString(),
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),
@@ -225,11 +306,30 @@ getLandInspectorInfo() async {
                     ),
                     Expanded(
                       child: Center(
-                        child: Text(
-                          'Remove',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 45), // Add left padding
+                          child: ElevatedButton(
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.red),
+                            onPressed: () async {
+                              confirmDialog('Are you sure to remove?', context,
+                                  () async {
+                                SmartDialog.showLoading();
+                                if (connectedWithMetamask)
+                                  await model2.removeLandInspector(data[1]);
+                                else
+                                  await model.removeLandInspector(data[1]);
+                                Navigator.pop(context);
+                                await getLandInspectorInfo();
+                                SmartDialog.dismiss();
+                              });
+                            },
+                            child: const Text(
+                              'Remove',
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w800),
+                            ),
                           ),
                         ),
                       ),
@@ -238,147 +338,72 @@ getLandInspectorInfo() async {
                   ],
                 ),
               ),
-              const Divider(
-                height: 15,
-                thickness: 2,
-                color: Colors.black,     
-              )
+              Divider(
+                height: 25, // Adjust the height of the divider as needed
+                thickness: 1, // Adjust the thickness of the divider as needed
+                color:
+                    Colors.black, // Adjust the color of the divider as needed
+              ),
             ],
           );
-        }
-        index -= 1;
-        List<dynamic> data = allLandInspectorInfo[index];
-        return Column(
-          children: [
-            ListTile(
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      (index + 1).toString(),
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-                    ),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        data[1].toString(),
-                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    flex: 5,
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        data[2].toString(),
-                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    flex: 3,
-                  ),
-
-                Expanded(
-                    child: Center(
-                      child: Text(
-                        data[5].toString(),
-                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    flex: 2,
-                  ),
-                  
-                  Expanded(
-                    child: Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.red),
-                        onPressed: () async {
-                          confirmDialog('Are you sure to remove?', context, () async {
-                            SmartDialog.showLoading();
-                            if (connectedWithMetamask)
-                              await model2.removeLandInspector(data[1]);
-                            else
-                              await model.removeLandInspector(data[1]);
-                            Navigator.pop(context);
-                            await getLandInspectorInfo();
-                            SmartDialog.dismiss();
-                          });
-                        },
-                        child: const Text(
-                          'Remove',
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                    ),
-                    flex: 2,
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              height: 25, // Adjust the height of the divider as needed
-              thickness: 1, // Adjust the thickness of the divider as needed
-              color: Colors.black, // Adjust the color of the divider as needed
-            ),
-          ],
-        );
-
-      },
-    ),
-  );
-}
-
+        },
+      ),
+    );
+  }
 
   Widget changeContractOwner() {
-  return Center(
-    widthFactor: isDesktop ? 3.5 : 1,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: 300.0), // Adjust top padding as needed
-      child: SizedBox(
-        height: 600, // Adjust the height as needed
-        child: Center(
-          child: Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Color.fromARGB(255, 221, 220, 216), // Set the background color of the Card
-            child: Container(
-              width: 700,
-              padding: const EdgeInsets.all(70),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      "Change Contract Owner",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45),
-                      textAlign: TextAlign.center, // Align text to center
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      onChanged: (val) {
-                        newaddress = val;
-                      },
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Address',
-                        labelStyle: TextStyle(fontSize: 30),
-                        hintText: 'Enter new Contract Owner Address',
-                        hintStyle: TextStyle(fontSize: 30),
+    return Center(
+      widthFactor: isDesktop ? 3.5 : 1,
+      child: Padding(
+        padding: const EdgeInsets.only(
+            bottom: 300.0), // Adjust top padding as needed
+        child: SizedBox(
+          height: 600, // Adjust the height as needed
+          child: Center(
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: Color.fromARGB(
+                  255, 221, 220, 216), // Set the background color of the Card
+              child: Container(
+                width: 700,
+                padding: const EdgeInsets.all(70),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Text(
+                        "Change Contract Owner",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 45),
+                        textAlign: TextAlign.center, // Align text to center
                       ),
-                    ),
-                    SizedBox(height: 150),
-                    SizedBox(
+                      SizedBox(height: 20),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        onChanged: (val) {
+                          newaddress = val;
+                        },
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Address',
+                          labelStyle: TextStyle(fontSize: 30),
+                          hintText: 'Enter new Contract Owner Address',
+                          hintStyle: TextStyle(fontSize: 30),
+                        ),
+                      ),
+                      SizedBox(height: 150),
+                      SizedBox(
                         height: 80, // Adjust the height as needed
-                        width: double.infinity, // Set the width to match the parent's width
+                        width: double
+                            .infinity, // Set the width to match the parent's width
                         child: ElevatedButton(
                           onPressed: isLoading
                               ? null
@@ -388,16 +413,19 @@ getLandInspectorInfo() async {
                                   });
                                   try {
                                     if (connectedWithMetamask)
-                                      await model2.changeContractOwner(newaddress);
+                                      await model2
+                                          .changeContractOwner(newaddress);
                                     else
-                                      await model.changeContractOwner(newaddress);
+                                      await model
+                                          .changeContractOwner(newaddress);
                                     showToast("Successfully Changed",
                                         context: context,
                                         backgroundColor: Colors.green);
                                   } catch (e) {
                                     print(e);
                                     showToast("Something Went Wrong",
-                                        context: context, backgroundColor: Colors.red);
+                                        context: context,
+                                        backgroundColor: Colors.red);
                                   }
                                   setState(() {
                                     isLoading = false;
@@ -409,290 +437,284 @@ getLandInspectorInfo() async {
                           ),
                         ),
                       ),
-
-                    SizedBox(height: 20),
-                    isLoading ? const CircularProgressIndicator() : Container(),
-                  ],
+                      SizedBox(height: 20),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : Container(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-
-
- Widget addLandInspector() {
-  return Padding(
-    padding: const EdgeInsets.only(top:50,left:900,bottom: 200), // Adjust padding as needed
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.amber),
-        color: const Color(0xfff5f0e1),
-      ),
-      child: SizedBox(
-        width: isDesktop ? 875 : scrWidth * 0.9, // Adjust the width as needed
-        height: 1300,
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  child: Text(
-                    'Add Land Inspector',
-                    style: TextStyle(
-                      color: Colors.brown,
-                      fontSize: 75,
-                      fontWeight: FontWeight.w800,
+  Widget addLandInspector() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 50, left: 900, bottom: 200), // Adjust padding as needed
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.amber),
+          color: const Color(0xfff5f0e1),
+        ),
+        child: SizedBox(
+          width: isDesktop ? 875 : scrWidth * 0.9, // Adjust the width as needed
+          height: 1300,
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: Text(
+                      'Add Land Inspector',
+                      style: TextStyle(
+                        color: Colors.brown,
+                        fontSize: 75,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: isDesktop ? 750 : scrWidth * 0.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Address: ', style: TextStyle(fontSize: 38)),
-                      Flexible(
-                        child: Container(
-                          width: isDesktop ? 475 : scrWidth * 0.8,
-                          child: Padding(
-                            padding: const EdgeInsets.all(25),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onChanged: (val) {
-                                address = val;
-                              },
-                              style: TextStyle(fontSize: 35),
+                  SizedBox(
+                    width: isDesktop ? 750 : scrWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Address: ', style: TextStyle(fontSize: 38)),
+                        Flexible(
+                          child: Container(
+                            width: isDesktop ? 475 : scrWidth * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  address = val;
+                                },
+                                style: TextStyle(fontSize: 35),
                                 decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Address',
-                                hintText:'Enter Land Inspector Address(0xc5aEabE793B923981fc401bb8da620FDAa45ea2B)',
-                                labelStyle: TextStyle(fontSize: 30),
-                                hintStyle: TextStyle(fontSize: 30),
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Address',
+                                  hintText:
+                                      'Enter Land Inspector Address(0xc5aEabE793B923981fc401bb8da620FDAa45ea2B)',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                  hintStyle: TextStyle(fontSize: 30),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-               	SizedBox(
-                width: isDesktop ? 750 : scrWidth * 0.8,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Name:', style: TextStyle(fontSize: 38)),
-                    Flexible(
-                      child: Container(
-                        width: isDesktop ? 475 : scrWidth * 0.8,
-                        child: Padding(
-                          padding: const EdgeInsets.all(25),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
-                              return null;
-                            },
-                            onChanged: (val) {
-                              name = val;
-                            },
-                            style: TextStyle(fontSize: 35), // Set text size here
-                            //obscureText: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Name',
-                              hintText: 'Enter Name',
-                              labelStyle: TextStyle(fontSize: 30),
-                              hintStyle: TextStyle(fontSize: 30),
-                            ),
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-
-                SizedBox(
-                  width: isDesktop ? 750 : scrWidth * 0.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Age:', style: TextStyle(fontSize: 38)),
-                      Flexible(
-                        child: Container(
-                          width: isDesktop ? 475 : scrWidth * 0.8,
-                        
-                          child: Padding(
-                            padding: const EdgeInsets.all(25),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onChanged: (val) {
-                                age = val;
-                              },
-                              //obscureText: true,
-                              style: TextStyle(fontSize: 35),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Age',
-                                hintText: 'Enter Age',
-                                labelStyle: TextStyle(fontSize: 30),
-                                hintStyle: TextStyle(fontSize: 30),
+                  ),
+                  SizedBox(
+                    width: isDesktop ? 750 : scrWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Name:', style: TextStyle(fontSize: 38)),
+                        Flexible(
+                          child: Container(
+                            width: isDesktop ? 475 : scrWidth * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  name = val;
+                                },
+                                style: TextStyle(
+                                    fontSize: 35), // Set text size here
+                                //obscureText: true,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Name',
+                                  hintText: 'Enter Name',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                  hintStyle: TextStyle(fontSize: 30),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: isDesktop ? 750 : scrWidth * 0.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Designation:', style: TextStyle(fontSize: 38)),
-                      Flexible(
-                        child: Container(
-                          width: isDesktop ? 475 : scrWidth * 0.8,
-                        
-                          child: Padding(
-                            padding: const EdgeInsets.all(25),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onChanged: (val) {
-                                desig = val;
-                              },
-                              //obscureText: true,
-                              style: TextStyle(fontSize: 35),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Designation',
-                                hintText: 'Enter Designation',
-                                labelStyle: TextStyle(fontSize: 30),
-                                hintStyle: TextStyle(fontSize: 30),
+                  SizedBox(
+                    width: isDesktop ? 750 : scrWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Age:', style: TextStyle(fontSize: 38)),
+                        Flexible(
+                          child: Container(
+                            width: isDesktop ? 475 : scrWidth * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  age = val;
+                                },
+                                //obscureText: true,
+                                style: TextStyle(fontSize: 35),
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Age',
+                                  hintText: 'Enter Age',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                  hintStyle: TextStyle(fontSize: 30),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: isDesktop ? 750 : scrWidth * 0.8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('City :', style: TextStyle(fontSize: 38)),
-                      Flexible(
-                        child: Container(
-                          width: isDesktop ? 475 : scrWidth * 0.8,
-                        
-                          child: Padding(
-                            padding: const EdgeInsets.all(25),
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter some text';
-                                }
-                                return null;
-                              },
-                              onChanged: (val) {
-                                city = val;
-                              },
-                              //obscureText: true,
-                              style: TextStyle(fontSize: 35),
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'City',
-                                hintText: 'Enter City',
-                                labelStyle: TextStyle(fontSize: 30),
-                                hintStyle: TextStyle(fontSize: 30),
+                  SizedBox(
+                    width: isDesktop ? 750 : scrWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Designation:', style: TextStyle(fontSize: 38)),
+                        Flexible(
+                          child: Container(
+                            width: isDesktop ? 475 : scrWidth * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  desig = val;
+                                },
+                                //obscureText: true,
+                                style: TextStyle(fontSize: 35),
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Designation',
+                                  hintText: 'Enter Designation',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                  hintStyle: TextStyle(fontSize: 30),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: CustomButton(
-                    'Add',
-                    isLoading
-                        ? null
-                        : () async {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              try {
-                                if (connectedWithMetamask)
-                                  await model2.addLandInspector(
-                                      address, name, age, desig, city);
-                                else
-                                  await model.addLandInspector(
-                                      address, name, age, desig, city);
-                                showToast("Successfully Added",
-                                    context: context,
-                                    backgroundColor: Colors.green);
-                              } catch (e) {
-                                print(e);
-                                showToast("Something Went Wrong",
-                                    context: context,
-                                    backgroundColor: Colors.red);
+                  SizedBox(
+                    width: isDesktop ? 750 : scrWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('City :', style: TextStyle(fontSize: 38)),
+                        Flexible(
+                          child: Container(
+                            width: isDesktop ? 475 : scrWidth * 0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(25),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  city = val;
+                                },
+                                //obscureText: true,
+                                style: TextStyle(fontSize: 35),
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'City',
+                                  hintText: 'Enter City',
+                                  labelStyle: TextStyle(fontSize: 30),
+                                  hintStyle: TextStyle(fontSize: 30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: CustomButton(
+                      'Add',
+                      isLoading
+                          ? null
+                          : () async {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                try {
+                                  if (connectedWithMetamask)
+                                    await model2.addLandInspector(
+                                        address, name, age, desig, city);
+                                  else
+                                    await model.addLandInspector(
+                                        address, name, age, desig, city);
+                                  showToast("Successfully Added",
+                                      context: context,
+                                      backgroundColor: Colors.green);
+                                } catch (e) {
+                                  print(e);
+                                  showToast("Something Went Wrong",
+                                      context: context,
+                                      backgroundColor: Colors.red);
+                                }
+                                setState(() {
+                                  isLoading = false;
+                                });
                               }
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
-                          },
+                            },
+                    ),
                   ),
-                ),
-                isLoading 
-                    ? const CircularProgressIndicator()
-                    : Container(),
-              ],
+                  isLoading ? const CircularProgressIndicator() : Container(),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget drawer2() {
-    
     return Container(
       decoration: const BoxDecoration(
         boxShadow: [

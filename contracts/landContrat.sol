@@ -252,8 +252,6 @@ contract Land {
         require(LandRequestMapping[_requestId].buyerId==msg.sender && LandRequestMapping[_requestId].requestStatus==reqStatus.accepted);
 
         LandRequestMapping[_requestId].requestStatus=reqStatus.paymentdone;
-        //LandRequestMapping[_requestId].sellerId.transfer(lands[LandRequestMapping[_requestId].landId].landPrice);
-        //lands[LandRequestMapping[_requestId].landId].ownerAddress.transfer(lands[LandRequestMapping[_requestId].landId].landPrice);
         lands[LandRequestMapping[_requestId].landId].ownerAddress.transfer(msg.value);
         LandRequestMapping[_requestId].isPaymentDone=true;
         paymentDoneList[1].push(_requestId);
