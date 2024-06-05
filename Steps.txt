@@ -1,9 +1,7 @@
-(1) truffle compile
-(2) truffle migrate
-(3) flutter pub get
-(4) flutter run -d web-server --web-port 5555
+(1) npm install -g truffle
+(2) truffle compile
+(3) truffle migrate
+(4) flutter pub get
+(5) flutter run -d web-server --web-port 5555
 
-Contract Address:
-0xD113300B81F20AD7Eb1c96108c3cd6B6C8cf3A4C
-11 length alpha numeric Land ID (UPLIN)
-3 digit survey number
+
